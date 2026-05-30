@@ -40,11 +40,9 @@ def main():
     print(f"Jumlah data latih: {X_train.shape[0]}")
     print(f"Jumlah data uji: {X_test.shape[0]}")
     
-    # Mengatur nama eksperimen di MLflow (Opsional tapi direkomendasikan agar rapi)
-    mlflow.set_experiment("Telco_Customer_Churn_Basic_Model")
-    
-    # Memulai MLflow run
-    with mlflow.start_run(run_name="RandomForest_Basic"):
+    # Saat dijalankan via `mlflow run`, sebuah run id sudah terbentuk.
+    # Kita panggil start_run tanpa parameter agar menggunakan run_id yang sudah ada di environment.
+    with mlflow.start_run():
         print("Memulai pelatihan model RandomForestClassifier...")
         
         # Inisiasi model dasar tanpa hyperparameter tuning

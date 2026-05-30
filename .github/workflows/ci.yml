@@ -54,10 +54,10 @@ jobs:
         run: |
           # Membangun docker image dari model menggunakan fitur bawaan mlflow
           USERNAME=$(echo "${{ secrets.DOCKERHUB_USERNAME }}" | tr '[:upper:]' '[:lower:]')
-          echo "Membangun image untuk: ${USERNAME}/telco-churn-model:latest"
-          mlflow models build-docker -m ${{ env.MODEL_PATH }} -n ${USERNAME}/telco-churn-model:latest
+          echo "Membangun image untuk: ${USERNAME}/smsml-danuardi-saputro:latest"
+          mlflow models build-docker -m ${{ env.MODEL_PATH }} -n ${USERNAME}/smsml-danuardi-saputro:latest
 
       - name: Push Docker Image to Docker Hub
         run: |
           USERNAME=$(echo "${{ secrets.DOCKERHUB_USERNAME }}" | tr '[:upper:]' '[:lower:]')
-          docker push ${USERNAME}/telco-churn-model:latest
+          docker push ${USERNAME}/smsml-danuardi-saputro:latest

@@ -53,8 +53,11 @@ jobs:
       - name: Build Docker Image via MLflow Models (Advance)
         run: |
           # Membangun docker image dari model menggunakan fitur bawaan mlflow
-          mlflow models build-docker -m ${{ env.MODEL_PATH }} -n ${{ secrets.DOCKERHUB_USERNAME }}/telco-churn-model:latest
+          USERNAME=$(echo "${{ secrets.DOCKERHUB_USERNAME }}" | tr '[:upper:]' '[:lower:]')
+          echo "Membangun image untuk: ${USERNAME}/telco-churn-model:latest"
+          mlflow models build-docker -m ${{ env.MODEL_PATH }} -n ${USERNAME}/telco-churn-model:latest
 
       - name: Push Docker Image to Docker Hub
         run: |
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/telco-churn-model:latest
+          USERNAME=$(echo "${{ secrets.DOCKERHUB_USERNAME }}" | tr '[:upper:]' '[:lower:]')
+          docker push ${USERNAME}/telco-churn-model:latest

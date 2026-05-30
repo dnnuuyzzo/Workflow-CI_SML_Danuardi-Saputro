@@ -53,11 +53,9 @@ jobs:
       - name: Build Docker Image via MLflow Models (Advance)
         run: |
           # Membangun docker image dari model menggunakan fitur bawaan mlflow
-          USERNAME=$(echo "${{ secrets.DOCKERHUB_USERNAME }}" | tr '[:upper:]' '[:lower:]')
-          echo "Membangun image untuk: ${USERNAME}/smsml-danuardi-saputro:latest"
-          mlflow models build-docker -m ${{ env.MODEL_PATH }} -n ${USERNAME}/smsml-danuardi-saputro:latest
+          echo "Membangun image untuk: dnnuuyzzo/smsml-danuardi-saputro:latest"
+          mlflow models build-docker -m ${{ env.MODEL_PATH }} -n dnnuuyzzo/smsml-danuardi-saputro:latest
 
       - name: Push Docker Image to Docker Hub
         run: |
-          USERNAME=$(echo "${{ secrets.DOCKERHUB_USERNAME }}" | tr '[:upper:]' '[:lower:]')
-          docker push ${USERNAME}/smsml-danuardi-saputro:latest
+          docker push dnnuuyzzo/smsml-danuardi-saputro:latest

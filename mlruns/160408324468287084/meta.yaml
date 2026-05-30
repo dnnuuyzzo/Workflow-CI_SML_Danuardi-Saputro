@@ -1,0 +1,6 @@
+artifact_location: file:///D:/dev/submission-ssm/SMSML_Danuardi-Saputro/Workflow-CI/mlruns/160408324468287084
+creation_time: 1780136657775
+experiment_id: '160408324468287084'
+last_update_time: 1780136657775
+lifecycle_stage: active
+name: Telco_Customer_Churn_Basic_Model

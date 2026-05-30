@@ -26,14 +26,11 @@ jobs:
       - name: Run MLflow Project
         id: mlflow_run
         run: |
-          # Menjalankan MLflow Project (Otomatis membaca MLProject dan conda.yaml)
-          # Menggunakan local env agar tidak perlu install conda di runner
           mlflow run MLProject/ --env-manager local
 
       - name: Find Model Artifact
         id: find_model
         run: |
-          # Mencari path model yang dihasilkan di folder mlruns
           MODEL_PATH=$(find mlruns -type d -name "model" | head -n 1)
           echo "MODEL_PATH=${MODEL_PATH}" >> $GITHUB_ENV
           echo "Ditemukan model di: ${MODEL_PATH}"
@@ -44,17 +41,19 @@ jobs:
           name: mlruns-artifacts
           path: mlruns/
 
+      - name: Copy Model for Docker Build
+        run: |
+          cp -r ${{ env.MODEL_PATH }} ./model
+
       - name: Log in to Docker Hub (Advance)
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Build Docker Image via MLflow Models (Advance)
+      - name: Build Docker Image (Advance)
         run: |
-          # Membangun docker image dari model menggunakan fitur bawaan mlflow
-          echo "Membangun image untuk: dnnuuyzzo/smsml-danuardi-saputro:latest"
-          mlflow models build-docker -m ${{ env.MODEL_PATH }} -n dnnuuyzzo/smsml-danuardi-saputro:latest
+          docker build -t dnnuuyzzo/smsml-danuardi-saputro:latest .
 
       - name: Push Docker Image to Docker Hub
         run: |
